@@ -33,5 +33,5 @@ while i < n or j < m or k < (n+m):
         j += 1
     # retult index 1씩 증가
     k += 1
-
+ 
 print(*result)
