@@ -63,7 +63,7 @@ for n in range(1, 1000000):
     else:   # x <= ((n)*(n+1)/2)
         break
 
-# 
+
 target = n+1    # 분모 분자 더한 값
 mod = x - ((n-1)*(n)/2) -1   # 찾을 순서 -1 (index)
 
@@ -78,7 +78,7 @@ if target % 2 == 0:
         array.append(f'{i}/{j}')
         i -= 1
         j += 1
-else:
+else:		# 홀수면 분모가 더 큼
     i = 1
     j = target-1
     while i < target and j > 0:
