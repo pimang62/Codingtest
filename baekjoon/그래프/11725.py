@@ -42,12 +42,15 @@ def bfs():
                 node[nxt] = now     # 4에 1 넣기
                 q.append(nxt)
 
+# bfs()
+
 def dfs(now):
     for nxt in graph[now-1]:
         if node[nxt] == 0:
             node[nxt] = now
             dfs(nxt)
 
+# start
 dfs(1)
 
 for i in range(2, n+1):
