@@ -11,10 +11,10 @@ graph = []
 for _ in range(n):
     graph.append([s for s in input()])
 
-right_visited = [ [0]*len(graph[0]) for _ in range(n) ]
+yes_visited = [ [0]*len(graph[0]) for _ in range(n) ]
 not_visited = [ [0]*len(graph[0]) for _ in range(n) ]
 
-def right_bfs(i, j, visited,  rgb):
+def yes_bfs(i, j, visited,  rgb):
 
     dx = [0, 1, 0, -1]
     dy = [1, 0, -1, 0]
@@ -57,16 +57,16 @@ def not_bfs(i, j, visited,  rgb):
                     q.append((nx, ny))
     return 1
 
-right_cnt, not_cnt = 0, 0
+yes_cnt, not_cnt = 0, 0
 
 for i in range(n):
     for j in range(len(graph[0])):
         # 방문하지 않았다면 움직임
-        if right_visited[i][j] == 0:
+        if yes_visited[i][j] == 0:
             rgb = graph[i][j]
-            right_cnt += right_bfs(i, j, right_visited, rgb)
+            yes_cnt += yes_bfs(i, j, yes_visited, rgb)
         if not_visited[i][j] == 0:
             rgb = graph[i][j]
             not_cnt += not_bfs(i, j, not_visited, rgb)
     
-print(right_cnt, not_cnt)
+print(yes_cnt, not_cnt)
