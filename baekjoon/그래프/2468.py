@@ -20,7 +20,7 @@ for _ in range(n):
 '''
 from collections import deque
 
-def bfs(i, j, l):
+def bfs(i, j, h):
 
     dx = [0, 1, 0, -1]
     dy = [1, 0, -1, 0]
@@ -34,7 +34,7 @@ def bfs(i, j, l):
             ny = y + dy[k]
             if nx < 0 or nx >= n or ny < 0 or ny >= n:
                 continue
-            if visited[nx][ny] == 0 and graph[nx][ny] > l:
+            if visited[nx][ny] == 0 and graph[nx][ny] > h:
                 visited[nx][ny] = 1
                 q.append((nx, ny))
 
@@ -50,13 +50,13 @@ for _ in range(n):
     graph.append(row)
 
 result = 0
-for l in range(maximum):
+for h in range(maximum):
     cnt = 0
     visited = [ [0]*n for _ in range(n) ]
     for i in range(n):
         for j in range(n):
-            if visited[i][j] == 0 and graph[i][j] > l:
-                bfs(i, j, l)
+            if visited[i][j] == 0 and graph[i][j] > h:
+                bfs(i, j, h)
                 cnt += 1
     
     result = max(cnt, result)
