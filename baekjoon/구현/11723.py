@@ -6,6 +6,8 @@ check x : S에 x가 있으면 1, 없으면 0
 toggle x : S에 x가 있으면 제거, 없으면 추가
 all : S를 {1, 2, ... , 20}으로 바꿈
 empty : S를 공집합으로 바꿈
+
+참고: https://velog.io/@1998yuki0331/%ED%8C%8C%EC%9D%B4%EC%8D%AC%EC%9C%BC%EB%A1%9C-%EC%88%9C%EC%97%B4-%EC%A1%B0%ED%95%A9-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0
 '''
 
 import sys
