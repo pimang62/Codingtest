@@ -16,6 +16,7 @@ n by n 물고기 m, 아기 상어 1
 자신의 크기와 "같은 수의 물고기"를 먹을 때마다 크기가 1 증가
 몇 초동안 잡아먹을 수 있는지?
 
+4
 4 3 2 1
 0 0 0 0
 0 0 9 0
@@ -78,23 +79,24 @@ def find(visited):  # 0 < graph[i][j] < size인 곳 찾기
         return x, y, mini
     return None  # if mini == 1e9
 
-answer = 0  # 시간 기록
-cnt = 0  # 먹은 물고기 수
-while True:
-    check = find(bfs(sx, sy))
-    if check == None:  # 엄마 상어!
-        break  # print(answer)
-    else:
-        nx, ny, dist = check
-        answer += dist
-        graph[nx][ny] = 0  # 먹음
-        cnt += 1
-        if cnt == size:
-            size += 1
-            cnt = 0  # 다시 초기화!!
-        sx, sy = nx, ny
-        
-print(answer)
+if __name__ == '__main__':
+    answer = 0  # 시간 기록
+    cnt = 0  # 먹은 물고기 수
+    while True:
+        check = find(bfs(sx, sy))
+        if check == None:  # 엄마 상어!
+            break  # print(answer)
+        else:
+            nx, ny, dist = check
+            answer += dist
+            graph[nx][ny] = 0  # 먹음
+            cnt += 1
+            if cnt == size:
+                size += 1
+                cnt = 0  # 다시 초기화!!
+            sx, sy = nx, ny
+            
+    print(answer)
 
         
     
