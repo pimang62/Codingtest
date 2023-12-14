@@ -105,4 +105,62 @@ if answer > 1:
     print(time)
 else:
     print(0)
+
+# 다른 사람의 풀이
+# 참고: https://jie0025.tistory.com/211
+from collections import deque
+
+n, m = map(int, input().split())
+graph = [list(map(int, input().split())) for _ in range(n)]
+
+dx = [0, 1, 0, -1]  # 동 남 서 북
+dy = [1, 0, -1, 0]
+
+def in_range(a, b):
+    if 0 <= a < n and 0 <= b < m:
+        return True
+    return False
+
+def bfs(i, j):  # 연결 지점 찾아오기
+    q = deque([(i, j)])
+    visited[i][j] = 1
     
+    while q:
+        x, y = q.popleft()
+        for k in range(4):
+            nx, ny = x+dx[k], y+dy[k]
+            if not in_range(nx, ny):
+                continue
+            if graph[nx][ny] == 0: # 연결 지점에 바다가 있으면
+                visited[x][y] += 1  # visited에 기록!(독립적)
+            if not visited[nx][ny] and graph[nx][ny] > 0:
+                visited[nx][ny] = 1
+                q.append((nx, ny))
+    return 
+
+time = 0  # 시간 기록  
+while True:
+    visited = [[0]*m for _ in range(n)]  # 매초 갱신
+    
+    ice = 0  # 덩어리 개수
+    for i in range(n):
+        for j in range(m):
+            if not visited[i][j] and graph[i][j] > 0:
+                bfs(i, j)
+                ice += 1
+    
+    # visited 보며 그래프 갱신
+    for i in range(n):
+        for j in range(m):
+            if visited[i][j]:  # > 0
+                # 방문 처리 visited[i][j] + 바다 갯수 : -1 해줘야!
+                graph[i][j] = max(0, graph[i][j] - (visited[i][j]-1))
+    
+    if ice > 1 or ice == 0:
+        break
+    time += 1
+
+if ice:
+    print(time)
+else:  # 0이면
+    print(0)
