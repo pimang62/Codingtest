@@ -2,7 +2,6 @@
 [2차원 배열의 합]
 시간 복잡도: 1e5*3e6
 '''
-'''
 # PyPy3로 제출
 import sys
 input = sys.stdin.readline
@@ -19,7 +18,7 @@ for _ in range(k):
         for b in range(j-1, y):  # j-1 ~ y-1
             summ += graph[a][b]
     print(summ)
-'''
+
 # 누적합으로 풀기
 n, m = map(int, input().split())
 graph = [list(map(int, input().split())) for _ in range(n)]
