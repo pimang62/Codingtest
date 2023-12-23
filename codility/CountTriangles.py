@@ -17,7 +17,6 @@ def solution(A):
     return answer
 
 # 100% : O(N**2)
-
 def solution(A):
     N = len(A)
     # [1, 2, 5, 8, 10, 12]
