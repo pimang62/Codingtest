@@ -4,7 +4,7 @@
 # return 3
 from math import ceil
 
-# 44% : int(dist/D)+1, 100% : ceil
+# 44% : int(dist/D)+1, 100% : ceil O(1)
 def solution(X, Y, D):
     # return ceil(dist/D)
     dist = Y-X
