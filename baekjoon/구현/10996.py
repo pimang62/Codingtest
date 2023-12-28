@@ -1,3 +1,7 @@
+'''
+[별 찍기 -21]
+'''
+
 n = int(input())
 
 for i in range(2*n):
