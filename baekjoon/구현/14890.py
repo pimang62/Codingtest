@@ -23,6 +23,8 @@ n by n, 각 칸에는 높이
     - 나 포함 뒤로 L만큼 가능한지 확인
       (가능하면 브릿지 있는지 보고 기록)
 3. 나랑 같은 값이면 그냥 지나감
+
+* 참고 : https://sapjilkingios.tistory.com/entry/Python%EA%B5%AC%ED%98%84-%EB%B0%B1%EC%A4%80-14890%EB%B2%88-%EA%B2%BD%EC%82%AC%EB%A1%9C
 '''
 n, l = map(int, input().split())
 graph = [list(map(int, input().split())) for _ in range(n)]
