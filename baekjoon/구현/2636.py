@@ -52,25 +52,26 @@ def bfs():
             if not in_range(nx, ny) or visited[nx][ny]:
                 continue
             
-            if graph[nx][ny] != 1:  # 0 또는 2
-                visited[nx][ny] = 1
-                q.append((nx, ny))
-            if graph[nx][ny] == 1:
+            if graph[x][y] == 0 and graph[nx][ny] == 1:
                 graph[nx][ny] = 2  # 녹은 부분
                 visited[nx][ny] = 1
-                cnt += 1
+            if graph[nx][ny] != 1:
+                visited[nx][ny] = 1
+                q.append((nx, ny))
     return cnt
 
 time = 0  # 전부 없어질 때까지 걸린 시간
 answer = 0  # 바로 직전 치즈 블록 수
-while True:
-    melt = bfs()  # cnt
-    if melt == 0:
-        break
-    answer = melt
-    time += 1
+bfs()
+print(graph)
+# while True:
+#     melt = bfs()  # cnt
+#     if melt == 0:
+#         break
+#     answer = melt
+#     time += 1
         
-print(time, answer, end='\n')
+# print(time, answer, end='\n')
 
 """
 # if graph[x][y] == 0 and graph[nx][ny] == 1:
@@ -97,7 +98,7 @@ print(time, answer, end='\n')
 # if graph[nx][ny] != 1:  # 0 또는 2
 #     visited[nx][ny] = 1
 #     q.append((nx, ny))
-# if graph[nx][ny] == 1:
+# else:  # if graph[nx][ny] == 1
 #     graph[nx][ny] = 2  # 녹은 부분
 #     visited[nx][ny] = 1
 #     cnt += 1
@@ -115,4 +116,5 @@ print(time, answer, end='\n')
  [0, 0, 2, 1, 1, 1, 1, 1, 2, 0, 0, 0], 
  [0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0], 
  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
 """
