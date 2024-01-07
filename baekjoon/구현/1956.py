@@ -44,7 +44,7 @@ print(answer if answer < 1e9 else -1)
  [1000000000.0, 5, 2, 3, 4]]
 '''
 
-# 다익스트라
+# 다익스트라 -> 메모리 초과 [실패]
 import sys
 from heapq import heappush, heappop
 
