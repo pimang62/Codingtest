@@ -51,11 +51,11 @@ def bfs():
             nx, ny = x+dx[k], y+dy[k]
             if not in_range(nx, ny) or visited[nx][ny]:
                 continue
-            
-            if graph[nx][ny] != 1:  # 0 또는 2
+            # 이 부분이 치즈를 녹이는 핵심 파트
+            if graph[nx][ny] != 1:  # 0 또는 2 : 공기
                 visited[nx][ny] = 1
                 q.append((nx, ny))
-            else:  # if graph[nx][ny] == 1
+            else : # if graph[nx][ny] == 1:
                 graph[nx][ny] = 2  # 녹은 부분
                 visited[nx][ny] = 1
                 cnt += 1
@@ -94,13 +94,12 @@ print(time, answer, end='\n')
  [0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0], 
  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-# if graph[nx][ny] != 1:  # 0 또는 2
+# if graph[nx][ny] != 1:
 #     visited[nx][ny] = 1
 #     q.append((nx, ny))
-# else:  # if graph[nx][ny] == 1
+# if graph[x][y] == 0 and graph[nx][ny] == 1:
 #     graph[nx][ny] = 2  # 녹은 부분
 #     visited[nx][ny] = 1
-#     cnt += 1
 >>>
 [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
