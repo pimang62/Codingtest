@@ -11,32 +11,37 @@
 ┛  : [3, b(1, 4), 2, s(3, 2)]
 - 규칙 : 1/2 & 3/4 나머지 건너 뛰고 안쪽
 '''
-
 k = int(input())
 
-maxi = [[0, 0], [0, 0]]  # 인덱스, 최댓값
+max_idx = [0, 0]  # 인덱스
+max_length = [0, 0]  # 최댓값
+
 nlist = []
 for i in range(6):
     d, length = map(int, input().split())
     if d == 1 or d == 2:  # 동서 중 max
-        if length > maxi[0][1]:
-            maxi[0][0] = i  # index
-            maxi[0][1] = length
-    else:  # d == 2 or d == 3
-        if length > maxi[1][1]:
-            maxi[1][0] = i  # index
-            maxi[1][1] = length
-    nlist.append([i, length])
+        if length > max_length[0]:
+            max_idx[0] = i  # index
+            max_length[0] = length  # max
+    else:  # d == 2 or d == 3:
+        if length > max_length[1]:
+            max_idx[1] = i  # index
+            max_length[1] = length  # max
+    nlist.append(length)
 
-print(maxi)
-# 두 bigger 인덱스 중에 작은 걸 고르기
-idx = min(maxi[0][0], maxi[1][0])
-mini = [0, 0]  # 인덱스 없이 값만 찾기
+# 두 bigger 인덱스 중에 작은 것, 큰 것 고르기
+# idx = min(max_idx)  # b[0]의 인덱스가 클 때도 있음
+# jdx = max(max_idx)  # 이렇게 하면 안됨!!
 
-# in range에 있는 값 찾기
-mini[0] = nlist[(idx+3)%6][1]
-mini[1] = nlist[(idx+4)%6][1]
+check = [0]*6
+for j in max_idx:
+    for jdx in j-1, j, (j+1)%6:  # j-1, j, j+1
+        check[jdx] = 1
+
+mini = []  # 인덱스 없이 값만 찾기
+for l in range(6):
+    if not check[l]:
+        mini.append(nlist[l])
 
 # 참외 개수 k * (바깥 넓이 - 안쪽 넓이)
-print(k*(maxi[0][1]*maxi[1][1] - mini[0]*mini[1]))
-            
+print(k*(max_length[0]*max_length[1] - mini[0]*mini[1]))
