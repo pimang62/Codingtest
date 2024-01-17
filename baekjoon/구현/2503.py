@@ -11,8 +11,7 @@
 327 2 0
 489 0 1
 '''
-# from itertools import permutations
-
+# backtracking: 44ms
 n = int(input())
 
 target = []
@@ -53,3 +52,36 @@ def dfs(cnt: int, num: list):
 dfs(0, [])
 print(answer)
 # print(result)  # ['324', '328']
+
+# ----------------------------------------------------
+
+# permutations: 48ms
+from itertools import permutations
+
+n = int(input())
+
+target = []
+for _ in range(n):
+    s, a, b = input().split()
+    target.append((s, int(a), int(b)))
+    
+nlist = [str(i) for i in range(1, 10)]  # 1~9
+answer = 0
+
+for per in permutations(nlist, 3):
+    # per : ('1', '2', '3')
+    flag = True  # 모든 target check
+    for (tar, a, b) in target:
+        c, d = 0, 0
+        for i in range(3):
+            if tar[i] == per[i]:
+                c += 1
+            elif per[i] in tar:
+                d += 1
+        if (c, d) != (a, b):
+            flag = False
+            break
+    if flag:
+        answer += 1
+
+print(answer)
