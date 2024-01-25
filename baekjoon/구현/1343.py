@@ -16,7 +16,7 @@ for i in input():
         S.append(i)
         word = ''
 S.append(word)  # 마지막 단어 붙이기
-        
+ 
 answer = []
 for s in S:
     if len(s) == 2:
