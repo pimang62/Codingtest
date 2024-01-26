@@ -27,11 +27,8 @@ for _ in range(m):
     i, j, s, d, z = map(int, input().split())  # (위치, 속력, 방향, 크기)
     shark[(i-1, j-1)] = (s, d, z)
 
-# dx = [0, 1, 0, -1]  # 동남서북
-# dy = [1, 0, -1, 0]
-    
-dx12, dy12 = [-1, 1], [0, 0]  # 북남동서
-dx34, dy34 = [0, 0], [1, -1]
+dx = [-1, 1, 0, 0]  # 북남동서
+dy = [0, 0, 1, -1]
 
 def in_range(a, b):
     if 0 <= a < r and 0 <= b < c:
@@ -39,34 +36,54 @@ def in_range(a, b):
     return False
 
 def move():
-    d = {}
-    for (x, y) in shark.keys():
-        v, k, l = shark[(x, y)]  # 속력, 방향, 크기
+    global shark
+    new_shark = {}
+    for (x, y), (v, k, l) in shark.items():
+        if k <= 2:  # 상하 이동
+            divide = (r - 1) * 2
+        else:  # 좌우 이동
+            divide = (c - 1) * 2
+        
+        v %= divide  # (이제) 움직일 값 / 제자리
+        
         for _ in range(v):
-            if k == 1 or k == 2:
-                # 방향 전환 : 전환이 틀린듯..?
-                if not in_range(x+dx12[k-1], y+dy12[k-1]):
-                  k = (k-1+1)%2
-                nx, ny = x+dx12[k-1], y+dy12[k-1]
-            elif k == 3 or k == 4:
-                # 방향 전환
-                if not in_range(x+dx34[k-3], y+dy34[k-3]):
-                  k = (k-3+1)%2
-                nx, ny = x+dx34[k-3], y+dy34[k-3]
-        if (nx, ny) in d and d[(nx, ny)][-1] > l:
+            # 방향 전환
+            """
+            if not in_range(nx, ny):
+                # 1<->2, 3<->4 (?)
+                direction = 3 - direction if direction < 3 else 7 - direction
+                nx, ny = x + dx[direction-1], y + dy[direction-1]
+            x, y = nx, ny
+            """
+            if k == 1:
+                if not in_range(x+dx[k-1], y+dy[k-1]):
+                    k = 2  # 1 -> 2 
+            elif k == 2:
+                if not in_range(x+dx[k-1], y+dy[k-1]):
+                    k = 1  # 2 -> 1
+            elif k == 3:
+                if not in_range(x+dx[k-1], y+dy[k-1]):
+                    k = 4  # 3 -> 4
+            else:  # k == 4
+                if not in_range(x+dx[k-1], y+dy[k-1]):
+                    k = 3  # 4 -> 3
+            nx, ny = x+dx[k-1], y+dy[k-1]
+            x, y = nx, ny  # 계속 움직임
+        if (x, y) in new_shark and new_shark[(x, y)][-1] > l:
             continue
-        d[(nx, ny)] = (v, k, l)
-        x, y = nx, ny
-    return d
+        new_shark[(x, y)] = (v, k, l)
+        
+    return new_shark
 
-answer = 0  # 잡은 상어 크기의 합
-for j in range(c):  # 사람 index
-    # 열에서 가장 가까운 상어 찾기
-    for i in range(r):  # 가장 가까운 index
-        if (i, j) in shark:
-            answer += shark[(i, j)][-1]  # 크기 더하기
-            del shark[(i, j)]
-            break
-    shark = move()
+if __name__ == '__main__':
+    answer = 0  # 잡은 상어 크기의 합
+    for j in range(c):  # 사람 index
+        # 열에서 가장 가까운 상어 찾기
+        for i in range(r):  # 가장 가까운 index
+            if (i, j) in shark:
+                answer += shark[(i, j)][-1]  # 크기 더하기
+                del shark[(i, j)]
+                break
+        shark = move()
 
-print(answer)
+    print(answer)
