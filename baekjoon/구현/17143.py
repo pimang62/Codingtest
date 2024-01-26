@@ -40,11 +40,11 @@ def move():
     new_shark = {}
     for (x, y), (v, k, l) in shark.items():
         if k <= 2:  # 상하 이동
-            divide = (r - 1) * 2
+            divider = (r - 1) * 2
         else:  # 좌우 이동
-            divide = (c - 1) * 2
+            divider = (c - 1) * 2
         
-        v %= divide  # (이제) 움직일 값 / 제자리
+        v %= divider  # (이제) 움직일 값 / 제자리
         
         for _ in range(v):
             # 방향 전환
