@@ -48,8 +48,8 @@ for i in range(n):
             q.append(graph[i][y])
     
     # 얼마나 돌릴지 저장
-    k = r % ((n-i*2)*2 + (m-i*2)*2)  # 최적화
-    q.rotate(r)
+    k = r % ((n-i*2-1)*2 + (m-i*2-1)*2)  # 최적화
+    q.rotate(k)
     
     # 각 자리에 다시 배정
     for x in range(i, n-i):
