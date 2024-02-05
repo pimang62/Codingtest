@@ -18,7 +18,7 @@ def dfs(boarding, visited, answer, cnt):
 
     target = answer[-1]
     if target not in boarding:  # 도착지점이 시작지점에 없을 때
-            return
+        return
         
     for i in range(len(boarding[target])):  # [elist]
         
