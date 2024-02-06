@@ -89,12 +89,13 @@ for _ in range(k):
     for i in range(n):
         for j in range(n):
             graph[i][j] += add[i][j]
-    
+
 answer = 0  # tree 전체 길이
 for i in range(n):
     for j in range(n):
         answer += len(tree[i][j])
 
+# answer = sum(len(tree[i][j]) for i in range(n) for j in range(n))
 print(answer)
 
 """timeout
