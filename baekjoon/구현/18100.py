@@ -12,11 +12,10 @@ ex. 25명이면 위 3.75 -> 4명, 아래 "
 
 오사오입 : 0.5 초과 -> 올림, 0.5 이하 -> 내림
 '''
-n = int(input())
+import sys
+input = sys.stdin.readline
 
-if n == 0:
-    print(0)
-    exit()
+n = int(input())
 
 nlist = []
 for _ in range(n):
@@ -31,7 +30,9 @@ def round2(num):  # 파이썬 오사오입 때문 -> 직접 정의
         return int(num)
 
 s = round2(n*0.15)  
-if s != 0:
-    slices = nlist[s:-s]
+slices = nlist[s:n-s]  # not -s !
 
-print(round2(sum(slices)/len(slices)))
+if not slices:
+    print(0)
+else:
+    print(round2(sum(slices)/len(slices)))
