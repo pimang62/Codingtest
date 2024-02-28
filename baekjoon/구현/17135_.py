@@ -15,6 +15,14 @@ def move(graph):
                 new_graph[i+1][j] = graph[i][j]
     return new_graph
 
+dx = [0, 1, 0, -1]  # 동남서북
+dy = [1, 0, -1, 0]
+
+def in_range(a, b):
+    if 0 <= a < n and 0 <= b < m :
+        return True
+    return False
+
 answer = 0
 for _ in range(n):
     for combi in combinations(range(n), 3):
