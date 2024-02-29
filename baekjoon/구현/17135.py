@@ -98,7 +98,7 @@ def _combinations(array, r):
         if r == 1:  # 종료 조건
             yield [array[i]]
         else:
-            for next in combinations(array[i + 1:], r - 1):
+            for next in _combinations(array[i+1:], r-1):
                 yield [array[i]] + next
 
 class Solution:
