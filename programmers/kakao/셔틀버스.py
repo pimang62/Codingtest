@@ -1,5 +1,6 @@
 '''
 [2018 KAKAO BLIND RECRUITMENT]
+https://school.programmers.co.kr/learn/courses/30/lessons/17678
 
 "9시"부터 총 n회 t분 간격 도착
 하나의 셔틀에는 최대 m명
