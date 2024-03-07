@@ -20,45 +20,76 @@ graph = [
     ...
 ]
 '''
-answer_a = 1e9
-answer_b = 1e9
-
-def dfs(now, target, total, updated_fares):  # now: [66, 4], target : a or b, 70
-    global answer_a, answer_b
-    if now[1] == target:
-        if str(target) == 'a':
-            answer_a = min(answer_a, total+now[0])
-        else:  # 'b'
-            answer_b = min(answer_b, total+now[0])
-        return
-    
-    for nxt in updated_fares[now[1]]:
-        if nxt and nxt[1] != 0:  # 방문하지 않았다면
-            ori_nxt = nxt
-            nxt[1] = 0  # 방문 처리
-            dfs(nxt, target, total+nxt[0], updated_fares)
-            nxt = ori_nxt
-
-
+# 플로이드 워셜
 def solution(n, s, a, b, fares):
-    '''
+    """
+    # 0 -> 1e9로 바꿀것
+    [[0, 0, 0, 0, 0, 0, 0], 
+     [0, 0, 0, 41, 10, 24, 25], 
+     [0, 0, 0, 22, 66, 0, 0], 
+     [0, 41, 22, 0, 0, 24, 0], 
+     [0, 10, 66, 0, 0, 0, 50], 
+     [0, 24, 0, 24, 0, 0, 2], 
+     [0, 25, 0, 0, 50, 2, 0]]
+    """
+    graph = [[1e9]*(n+1) for _ in range(n+1)]
+    for [c, d, f] in fares:
+        graph[c][d] = f
+        graph[d][c] = f
+    
+    for i in range(1, n+1):
+        for j in range(1, n+1):
+            for k in range(1, n+1):
+                graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
+    
+    answer = 1e9
+    for i in range(1, n+1):  # 경유 지점 i
+        answer = min(answer, graph[s][i] + graph[i][a] + graph[i][b])
+    
+    return answer
+
+# 다익스트라
+import heapq
+def solution(n, s, a, b, fares):
+    """
     [[],
-     [[10,4],[41,3],[24,5],[25,6]],
-     [[66,4],[22,3]],
-     [[24,5],[41,1],[22,2]],
-     [[10,1],[50,6],[66,2]],
-     [[24,3],[2,6],[24,1]],
-     [[2,5],[50,4],[25,1]],
+     [(10,4),(41,3),(24,5),(25,6)],
+     [(66,4),(22,3)],
+     [(24,5),(41,1),(22,2)],
+     [(10,1),(50,6),(66,2)],
+     [(24,3),(2,6),(24,1)],
+     [(2,5),(50,4),(25,1)],
     ]
-    '''
-    graph = [[] for _ in range(n+1)] 
-    for [c, d, f] in fares:  # 1-indexed
-        graph[c].append([f, d])
-        graph[d].append([f, c])
+    """
+    graph = [[] for _ in range(n+1)]
+    for [c, d, f] in fares:
+        graph[c].append((f, d))
+        graph[d].append((f, c))
     
-    dfs(s, a, 0, fares)
-    dfs(s, b, 0, fares)
-    print(answer_a)
-    print(answer_b)
-    return answer_a + answer_b
+    def dijkstra(s):
+        dist = [1e9]*(n+1)
+        dist[s] = 0  # initialize
+        
+        q = []  
+        heapq.heappush(q, (0, s))  # 시작 지점 밀어넣기
+        while q:
+            now_cost, now = heapq.heappop(q)
+            for (nxt_cost, nxt) in graph[now]:
+                if dist[nxt] < dist[now] + nxt_cost:  # 이미 작다면
+                    continue
+                dist[nxt] = min(dist[nxt], dist[now] + nxt_cost)
+                heapq.heappush(q, (dist[nxt], nxt))
+        
+        return dist  # [1000000000.0, 10, 66, 51, 0, 34, 35]
     
+    board = [[]]
+    for i in range(1, n+1):
+        board.append(dijkstra(i))  # 모든 노드에서 시작한 dijkstra 넣음
+    
+    answer = 1e9
+    for k in range(1, n+1):
+        answer = min(answer, board[s][k] + board[k][a] + board[k][b])
+    
+    return answer
+
+print(solution(6, 4, 6, 2, [[4, 1, 10], [3, 5, 24], [5, 6, 2], [3, 1, 41], [5, 1, 24], [4, 6, 50], [2, 4, 66], [2, 3, 22], [1, 6, 25]]))
