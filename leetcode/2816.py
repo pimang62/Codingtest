@@ -12,20 +12,20 @@ class ListNode:
         self.next = next
 class Solution:
     def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        str_num = ''
-
-        now = head
-        while now:
-            str_num += str(now.val)
-            now = now.next
+        stack = []
         
-        double_str_num = str(int(str_num) * 2)
+        while head:
+            stack.append(head.val)
+            head = head.next
         
-        ln = ListNode(val=0, next=None)
-        prev = ln
-        for num in double_str_num:
-            prev.next = int(num)
-            prev = prev.next
+        tail = None
+        prev = 0  # 곱하다 남아서 더해질 값
+        while stack:
+            tail = ListNode(0, tail)
+            
+            prev += stack.pop() * 2  # 9 * 2 = 18
+            tail.val = prev % 10  # 8
+            prev //= 10  # 1
         
-        prev.next = None
-        return ln.next
+        return tail
+            
