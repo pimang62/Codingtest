@@ -18,13 +18,9 @@ class Solution:
     def getMaximumGold(self, grid: List[List[int]]) -> int:
         m, n = len(grid), len(grid[0])
 
-        dx = [0, 1, 0, -1]
-        dy = [1, 0, -1, 0]
-
         def in_range(a, b):
             return 0 <= a < m and 0 <= b < n
 
-        cnt = 0
         def dfs(i, j, cnt):
             nonlocal answer
             if not in_range(i, j) or grid[i][j] == 0:
