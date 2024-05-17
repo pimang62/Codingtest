@@ -13,7 +13,7 @@ after making any number of "moves"
 
 * if 0 in first flip the row
 * if num of 0 > 1 flip the col
-'''
+''' 
 from typing import List
 
 class Solution:
