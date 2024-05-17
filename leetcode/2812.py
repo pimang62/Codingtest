@@ -11,6 +11,7 @@ is defined as the "minimum" manhattan distance
 Return the "maximum" safeness factor
 '''
 from typing import List
+import heapq
 from collections import deque
 
 class Solution:
