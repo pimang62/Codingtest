@@ -15,20 +15,23 @@ ex. {D:1, O:1, G:1}
     {G:1, O:2, D:1}
     {D:1, O:1, L:2}
 '''
-from collections import Counter
-
 n = int(input())
-tag = input()
-target = Counter(tag)
+target = list(input())
 
-cnt = 0
-for _ in range(n-1):       
-    tmp = Counter(input())
-    # 문자 구성이 같은 경우: 각 문자의 개수 차이가 1 이내
-    if sum((target - tmp).values()) <= 1 and sum((tmp - target).values()) <= 1:
-        cnt += 1
-    # 문자 구성이 하나 차이나는 경우: 추가된 문자 또는 제거된 문자가 하나, 그 외 문자의 개수 차이가 1 이내
-    elif sum((target - tmp).values()) + sum((tmp - target).values()) == 2 and (len(target - tmp) == 1 or len(tmp - target) == 1):
-        cnt += 1
+answer = 0
 
-print(cnt)
+for _ in range(n-1):
+    compare = target[:] 
+    word = input()
+    cnt = 0
+
+    for w in word:
+        if w in compare:
+            compare.remove(w)
+        else:
+            cnt += 1
+
+    if cnt < 2 and len(compare) < 2:
+        answer += 1
+
+print(answer)
