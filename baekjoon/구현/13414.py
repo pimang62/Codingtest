@@ -12,8 +12,6 @@
 1 <= k <= 1e6
 1 <= l <= 5e6
 '''
-from collections import defaultdict
-
 k, l = map(int, input().split())  # 가능 인원, 대기목록 길이
 
 d = {}
@@ -21,11 +19,13 @@ for i in range(l):
     student = input()
     d[student] = i
 
-dlist = sorted(d.items(), key=lambda x: x[1])
+# ['20103324', '20133221', '20093778', '20140101', '20103325', '01234567']
+dlist = sorted(d, key=lambda x: d[x])
 
-for o in range(k):
-    (stud, idx) = dlist[o]
-    print(stud)
-
-
-    
+idx = 0
+for o in range(len(dlist)):
+    if idx >= k:
+        break
+    print(dlist[o])
+    idx += 1
+   
