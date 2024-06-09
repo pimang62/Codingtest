@@ -27,7 +27,6 @@ def in_range(a, b):
     return 0 <= a < n and 0 <= b < m
 
 def dfs(x, y, cnt):
-    global visited
     graph[x][y] = cnt
     for l in range(4):
         nx, ny = x+dx[l], y+dy[l]
@@ -44,21 +43,75 @@ for i in range(n):
     for j in range(m):
         if not visited[i][j] and graph[i][j] == 1:
             dfs(i, j, k)
-            k += 1
+            k += 1  # 5까지 기록됨
 
 edge = set()
 
-def distance(x, y):
-    now = graph[x][y]
+def distance(x, y, now):
     for l in range(4):
-        nx, ny = x+dx[l], y+dy[l]
-        while in_range(nx, ny):
-
-
-
+        cnt = 0  # 몇 칸 갔는지 체크
+        nx, ny = x, y
+        while in_range(nx+dx[l], ny+dy[l]):
+            nx += dx[l]
+            ny += dy[l]
+            if graph[nx][ny] > 0 and graph[nx][ny] != now:
+                if cnt >= 2:  # 다리 길이 최소 2칸 이상
+                    edge.add((cnt, now, graph[nx][ny]))  # (cnt, now, next)
+                break
+            elif graph[nx][ny] == 0:
+                cnt += 1
+            else:  # ex. graph[nx][ny] == now
+                break
 
 for i in range(n):
+    for j in range(m):
+        if graph[i][j] > 0 :
+            distance(i, j, graph[i][j])
+            
+parent = [i for i in range(k)]  # [0, 4+1]
 
+def find_parent(x, parent):
+    if parent[x] != x:
+        parent[x] = find_parent(parent[x], parent)
+    return parent[x]
 
+def union_parent(a, b, parent):
+    a = find_parent(a, parent)
+    b = find_parent(b, parent)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
 
-for j in range(m):
+def check(parent):
+    root = find_parent(1, parent)
+    if all(find_parent(i, parent) == root for i in range(2, k)):
+        return True
+    return False
+
+def main():
+    answer = 0  # min
+    for (cnt, now, nxt) in sorted(edge):  # 정렬!
+        if find_parent(now, parent) != find_parent(nxt, parent):
+            union_parent(now, nxt, parent)
+            answer += cnt
+    if check(parent):
+        return answer
+    else:
+        return -1
+
+print(main())
+
+''' # 다른 사람의 풀이
+def main():
+    num = 0  # 간선 개수
+    answer = 0  # min
+    for (cnt, now, nxt) in sorted(edge):  # 정렬!
+        if find_parent(now, parent) != find_parent(nxt, parent):
+            union_parent(now, nxt, parent)
+            answer += cnt
+            num += 1
+    return answer if (answer > 0) and (num == k-2) else -1
+
+print(main())
+'''
