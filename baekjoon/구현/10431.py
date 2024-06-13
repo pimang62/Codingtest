@@ -17,20 +17,19 @@ T, 20개의 양의 정수
 1 19 20 17 18 15 16 13 14 11 12 9 10 7 8 5 6 3 4 1 2
 1 189 => 180 *
 '''
-from collections import deque
-
 p = int(input())
 
 for i in range(1, p+1):
     nlist = list(map(int, input().split()))[1:]
 
     cnt = 0  # 물러난 걸음 수
-    q = deque()
-    for n in nlist:
-        if q and q[-1] > n:
-            cnt += len(q)
-            q.appendleft(n)
-            continue
-        q.append(n)
+    for j in range(1, len(nlist)):
+        key = nlist[j]
+        k = j - 1
+        while k >= 0 and nlist[k] > key:
+            nlist[k + 1] = nlist[k]
+            k -= 1
+            cnt += 1
+        nlist[k + 1] = key
     
     print(i, cnt)
