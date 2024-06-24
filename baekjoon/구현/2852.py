@@ -21,11 +21,9 @@ https://www.acmicpc.net/problem/2852
 '''
 from collections import defaultdict
 
-# 입력받기
 N = int(input())
 
 score = defaultdict(int)
-table = defaultdict(int)
 total = defaultdict(int)
 
 def time2int(time):
@@ -65,7 +63,7 @@ if winner is not None:
     total[winner] += end_time - last_time
 
 for team in ["1", "2"]:
-    print(team, int2time(total[team]))
+    print(int2time(total[team]))
     
 
 
