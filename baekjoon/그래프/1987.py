@@ -9,11 +9,12 @@ R by C, 대문자 알파벳이 하나씩, 1행 1열 말
 1 <= R, C <= 20
 '''
 R, C = map(int, input().split())
-graph = [input() for _ in range(R)]
+graph = []
+for _ in range(R):
+    graph.append(list(input()))
 
-x, y = 0, 0  # 1행 1열
 answer = 0  # 최대 칸 수
-path = []  # 지나온 알파벳
+path = set()  # 지나온 알파벳
 
 dx = [0, 1, 0, -1]  # 동남서북
 dy = [1, 0, -1, 0]
@@ -22,8 +23,8 @@ def in_range(a, b):
     """범위에 있는지 보는 함수"""
     return 0 <= a < R and 0 <= b < C
 
-
-def dfs(i, j, path: set):
+def _dfs(i, j, path: set):
+    """Backtracking 함수"""
     global answer
     # 범위에 없거나 path에 있다면 return
     if not in_range(i, j) or graph[i][j] in path:
@@ -37,9 +38,27 @@ def dfs(i, j, path: set):
         nx, ny = i+dx[k], j+dy[k]
         # dfs 탐색
         dfs(nx, ny, path)
+    # dfs(i, j+1, path)
+    # dfs(i+1, j, path)
+    # dfs(i, j-1, path)
+    # dfs(i-1, j, path)
     
     # 이번 값 내려놓기
     path.remove(graph[i][j])
 
-dfs(0, 0, set())  # (0, 0)에서 시작, no path
+
+def dfs(x, y, cnt):
+    global answer
+    answer = max(answer, cnt)
+    for k in range(4):
+        nx = x + dx[k]
+        ny = y + dy[k]
+        # 이걸 이렇게 해야 맞음.. in_range 사용 X
+        if 0 <= nx and 0 <= ny and nx < R and ny < C and graph[nx][ny] not in path:
+            path.add(graph[nx][ny])
+            dfs(nx, ny, cnt+1)
+            path.remove(graph[nx][ny])
+
+path.add(graph[0][0])
+dfs(0, 0, 1)
 print(answer)
