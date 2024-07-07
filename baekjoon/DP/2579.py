@@ -21,8 +21,8 @@ for _ in range(n):
 # 0  10  30  35  50  65  65
 # 1   0  20  25  55  45  75
 
-# 1칸 : d[i][0] += d[i-1][2]
-# 2칸 : d[i][1] += max(d[i-2][0], d[i-2][1])
+# 1칸 : d[0][i] += d[1][i-1] + table[i]
+# 2칸 : d[1][i] += max(d[0][i-2], d[1][i-2]) + table[i]
 
 d = [ [0]*n for _ in range(2) ]
 
@@ -36,7 +36,7 @@ if n > 2:
     d[1][1] = table[1]
 
     for i in range(2, len(table)):
-        d[0][i] = d[1][i-1] + table[i]     # 2칸에서 온 1칸
-        d[1][i] = max(d[0][i-2], d[1][i-2]) + table[i]    # 1칸 or 2칸에서 온 2칸
+        d[0][i] = d[1][i-1] + table[i]  # 2칸에서 온 1칸
+        d[1][i] = max(d[0][i-2], d[1][i-2]) + table[i]  # 1칸 or 2칸에서 온 2칸
 
     print(max(d[0][-1], d[1][-1]))
