@@ -1,5 +1,7 @@
 '''
 [별 찍기 - 23]
+https://www.acmicpc.net/problem/13015
+
 2 <= N <= 100
 
 ex. n = 2
