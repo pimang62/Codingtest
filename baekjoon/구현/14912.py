@@ -1,5 +1,7 @@
 '''
 [숫자 빈도수]
+https://www.acmicpc.net/problem/14912
+
 1부터 n까지 특정 숫자의 빈도수?
 
 ex. n = 11
